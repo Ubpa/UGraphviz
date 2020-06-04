@@ -16,15 +16,30 @@ Graphviz::Subgraph& Graphviz::Subgraph::GetSubgraph(const std::string& subgraphI
 }
 
 Graphviz::Subgraph& Graphviz::Subgraph::RegisterGraphAttr(std::string key, std::string value) {
-	graphAttrs.emplace_back(std::move(key), std::move(value));
+	graphAttrs.emplace(std::move(key), std::move(value));
 	return *this;
 }
 Graphviz::Subgraph& Graphviz::Subgraph::RegisterGraphNodeAttr(std::string key, std::string value) {
-	graphNodeAttrs.emplace_back(std::move(key), std::move(value));
+	graphNodeAttrs.emplace(std::move(key), std::move(value));
 	return *this;
 }
 Graphviz::Subgraph& Graphviz::Subgraph::RegisterGraphEdgeAttr(std::string key, std::string value) {
-	graphEdgeAttrs.emplace_back(std::move(key), std::move(value));
+	graphEdgeAttrs.emplace(std::move(key), std::move(value));
+	return *this;
+}
+
+Graphviz::Subgraph& Graphviz::Subgraph::DeregisterGraphAttr(const std::string& key) {
+	graphAttrs.erase(key);
+	return *this;
+}
+
+Graphviz::Subgraph& Graphviz::Subgraph::DeregisterGraphNodeAttr(const std::string& key) {
+	graphNodeAttrs.erase(key);
+	return *this;
+}
+
+Graphviz::Subgraph& Graphviz::Subgraph::DeregisterGraphEdgeAttr(const std::string& key) {
+	graphEdgeAttrs.erase(key);
 	return *this;
 }
 
@@ -35,13 +50,31 @@ Graphviz::Subgraph& Graphviz::Subgraph::GenSubgraph(std::string ID) {
 	return *subgraphs.back();
 }
 
+bool Graphviz::Subgraph::HaveNode(size_t nodeIdx) const {
+	return nodeIndices.find(nodeIdx) != nodeIndices.end();
+}
+
+bool Graphviz::Subgraph::HaveEdge(size_t edgeIdx) const {
+	return edgeIndices.find(edgeIdx) != edgeIndices.end();
+}
+
 Graphviz::Subgraph& Graphviz::Subgraph::AddNode(size_t nodeIdx) {
-	nodeIndices.push_back(nodeIdx);
+	nodeIndices.insert(nodeIdx);
 	return *this;
 }
 
 Graphviz::Subgraph& Graphviz::Subgraph::AddEdge(size_t edgeIdx) {
-	edgeIndices.push_back(edgeIdx);
+	edgeIndices.insert(edgeIdx);
+	return *this;
+}
+
+Graphviz::Subgraph& Graphviz::Subgraph::EraseNode(size_t nodeIdx) {
+	nodeIndices.erase(nodeIdx);
+	return *this;
+}
+
+Graphviz::Subgraph& Graphviz::Subgraph::EraseEdge(size_t edgeIdx) {
+	edgeIndices.erase(edgeIdx);
 	return *this;
 }
 
