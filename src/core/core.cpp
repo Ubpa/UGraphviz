@@ -84,7 +84,7 @@ std::string Graphviz::SubGraph::Dump(bool isSub, bool isDigraph, size_t indent) 
 
 		print_indent() << head << " [" << std::endl;
 		indent++;
-		for (const auto& [key, value] : graphAttrs)
+		for (const auto& [key, value] : attrs)
 			print_indent() << key << " = " << "\"" << value << "\"" << std::endl;
 		indent--;
 		print_indent() << "]" << std::endl;
