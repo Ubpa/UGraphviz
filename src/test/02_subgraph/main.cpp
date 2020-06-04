@@ -69,6 +69,9 @@ int main() {
 		.RegisterNodeAttr(v_end, "shape", "Msquare");
 
 	graph
+		.AddNode(v_start)
+		.AddNode(v_end)
+
 		.AddEdge(e_start_a0)
 		.AddEdge(e_start_b0)
 		.AddEdge(e_a1_b3)
