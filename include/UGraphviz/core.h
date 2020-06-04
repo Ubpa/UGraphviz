@@ -17,7 +17,7 @@ namespace Ubpa::Graphviz {
 		SubGraph& AddAllNodeAttr(std::string key, std::string value);
 		SubGraph& AddAllEdgeAttr(std::string key, std::string value);
 
-		SubGraph& AddSubGraph(SubGraph subgraph);
+		size_t AddSubGraph(SubGraph subgraph);
 
 		size_t AddNode(std::string nodeID);
 		size_t AddEdge(size_t lhs, size_t rhs);
@@ -51,14 +51,13 @@ namespace Ubpa::Graphviz {
 
 		using SubGraph::GetID;
 		using SubGraph::GetNodeIdx;
+		using SubGraph::AddSubGraph;
 		using SubGraph::AddNode;
 		using SubGraph::AddEdge;
 
 		Graph& AddGraphAttr(std::string key, std::string value);
 		Graph& AddAllNodeAttr(std::string key, std::string value);
 		Graph& AddAllEdgeAttr(std::string key, std::string value);
-
-		Graph& AddSubGraph(SubGraph subgraph);
 
 		Graph& AddNodeAttr(size_t nodeIdx, std::string key, std::string value);
 		Graph& AddEdgeAttr(size_t edgeIdx, std::string key, std::string value);
