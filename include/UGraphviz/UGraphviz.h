@@ -1,3 +1,5 @@
 #pragma once
 
-#include "core.h"
+#include "Graph.h"
+#include "Registrar.h"
+#include "Subgraph.h"
