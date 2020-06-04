@@ -1,0 +1,29 @@
+# antlr4 fils
+*.java
+*.interp
+*.tokens
+*.class
+
+_deps/
+
+# binary files
+*.png
+*.jpg
+*.bmp
+*.gif
+*.dds
+
+*.zip
+*.7z
+*.rar
+
+*.pdf
+
+*.mp4
+
+# directories
+resources/
+bin/
+lib/
+build/
+_deps/
