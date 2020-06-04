@@ -7,19 +7,15 @@ using namespace Ubpa;
 using namespace std;
 
 int main() {
-	Graphviz::Graph g("hello world", true);
+	Graphviz::Graph graph("hello world", true);
 
-	auto a = g.AddNode("a");
-	auto b = g.AddNode("b");
-	auto c = g.AddNode("c");
-	auto d = g.AddNode("d");
+	graph
+		.AddEdge("a", "b")
+		.AddEdge("a", "c")
+		.AddEdge("b", "d")
+		.AddEdge("c", "d");
 
-	g.AddEdge(a, b);
-	g.AddEdge(a, c);
-	g.AddEdge(b, d);
-	g.AddEdge(c, d);
-
-	cout << g.Dump() << endl;
+	cout << graph.Dump() << endl;
 
 	return 0;
 }
