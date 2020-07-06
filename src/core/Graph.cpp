@@ -29,7 +29,10 @@ std::string Graph::Dump() const {
 }
 
 Graph::Graph(Graph&& g) noexcept
-	: Subgraph{ g }, isDigraph{ g.isDigraph } { g.registrar = nullptr; }
+	: Subgraph{ std::move(g) }, isDigraph{ g.isDigraph }
+{
+	g.registrar = nullptr;
+}
 
 Graph& Graph::operator=(Graph&& g) noexcept {
 	Subgraph::operator=(std::move(g));

@@ -9,10 +9,7 @@ bool Registrar::IsRegisteredNode(const std::string& ID) const {
 	return id2idx.find(ID) != id2idx.end();
 }
 
-bool Registrar::IsRegisteredEdge(const std::string& lhsID, const std::string& rhsID) const {
-	size_t lhs = GetNodeIdx(lhsID);
-	size_t rhs = GetNodeIdx(rhsID);
-
+bool Registrar::IsRegisteredEdge(size_t lhs, size_t rhs) const {
 	auto target_lhs = node2edge.find(lhs);
 	if (target_lhs == node2edge.end())
 		return false;
@@ -24,6 +21,13 @@ bool Registrar::IsRegisteredEdge(const std::string& lhsID, const std::string& rh
 	return true;
 }
 
+bool Registrar::IsRegisteredEdge(const std::string& lhsID, const std::string& rhsID) const {
+	size_t lhs = GetNodeIdx(lhsID);
+	size_t rhs = GetNodeIdx(rhsID);
+
+	return IsRegisteredEdge(lhs, rhs);
+}
+
 size_t Registrar::GetNodeIdx(const std::string& ID) const {
 	assert(IsRegisteredNode(ID));
 	return id2idx.find(ID)->second;
@@ -33,7 +37,7 @@ size_t Registrar::GetEdgeIdx(const std::string& lhsID, const std::string& rhsID)
 	size_t lhs = GetNodeIdx(lhsID);
 	size_t rhs = GetNodeIdx(rhsID);
 	
-	assert(IsRegisteredEdge(lhsID, rhsID));
+	assert(IsRegisteredEdge(lhs, rhs));
 
 	return node2edge.find(lhs)->second.find(rhs)->second;
 }

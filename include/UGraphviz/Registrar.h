@@ -12,12 +12,13 @@ namespace Ubpa::Graphviz {
 		const std::vector<std::string>& GetNodes() const noexcept { return nodes; }
 		const std::vector<std::pair<size_t, size_t>>& GetEdges() const noexcept { return edges; }
 
-		const std::unordered_map<size_t, std::unordered_map<std::string, std::string>>&
-		GetNodeAttrs() const noexcept { return nodeAttrs; }
-		const std::unordered_map<size_t, std::unordered_map<std::string, std::string>>&
-		GetEdgeAttrs() const noexcept { return edgeAttrs; }
+		using ElemAttrMap = std::unordered_map<size_t, std::unordered_map<std::string, std::string>>;
+
+		const ElemAttrMap& GetNodeAttrs() const noexcept { return nodeAttrs; }
+		const ElemAttrMap& GetEdgeAttrs() const noexcept { return edgeAttrs; }
 
 		bool IsRegisteredNode(const std::string& ID) const;
+		bool IsRegisteredEdge(size_t lhs, size_t rhs) const;
 		bool IsRegisteredEdge(const std::string& lhsID, const std::string& rhsID) const;
 		
 		size_t GetNodeIdx(const std::string& ID) const;
@@ -40,10 +41,10 @@ namespace Ubpa::Graphviz {
 
 		std::vector<std::string> nodes;
 		std::unordered_map<std::string, size_t> id2idx;
-		std::unordered_map<size_t, std::unordered_map<std::string, std::string>> nodeAttrs;
+		ElemAttrMap nodeAttrs;
 
 		std::vector<std::pair<size_t, size_t>> edges;
 		std::unordered_map<size_t, std::unordered_map<size_t, size_t>> node2edge;
-		std::unordered_map<size_t, std::unordered_map<std::string, std::string>> edgeAttrs;
+		ElemAttrMap edgeAttrs;
 	};
 }
