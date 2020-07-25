@@ -21,17 +21,17 @@ namespace Ubpa::UGraphviz {
 		bool IsRegisteredEdge(size_t lhs, size_t rhs) const;
 		bool IsRegisteredEdge(const std::string& lhsID, const std::string& rhsID) const;
 		
-		size_t GetNodeIdx(const std::string& ID) const;
-		size_t GetEdgeIdx(const std::string& lhsID, const std::string& rhsID) const;
+		size_t GetNodeIndex(const std::string& ID) const;
+		size_t GetEdgeIndex(const std::string& lhsID, const std::string& rhsID) const;
 
 		size_t RegisterNode(std::string ID);
 		size_t RegisterEdge(size_t lhs, size_t rhs);
 
-		Registry& RegisterNodeAttr(size_t nodeIdx, std::string key, std::string value);
-		Registry& RegisterEdgeAttr(size_t edgeIdx, std::string key, std::string value);
+		Registry& RegisterNodeAttr(size_t nodeIndex, std::string key, std::string value);
+		Registry& RegisterEdgeAttr(size_t edgeIndex, std::string key, std::string value);
 
-		Registry& DeregisterNodeAttr(size_t nodeIdx, const std::string& key);
-		Registry& DeregisterEdgeAttr(size_t edgeIdx, const std::string& key);
+		Registry& DeregisterNodeAttr(size_t nodeIndex, const std::string& key);
+		Registry& DeregisterEdgeAttr(size_t edgeIndex, const std::string& key);
 
 	private:
 		Registry(const Registry&) = delete;
