@@ -7,21 +7,21 @@ using namespace Ubpa;
 using namespace std;
 
 int main() {
-	Graphviz::Graph graph("attr", true);
+	UGraphviz::Graph graph("attr", true);
 
-	auto& registrar = graph.GetRegistrar();
+	auto& registry = graph.GetRegistry();
 
-	auto v_a = registrar.RegisterNode("a");
-	auto v_b = registrar.RegisterNode("b");
-	auto v_c = registrar.RegisterNode("c");
-	auto v_d = registrar.RegisterNode("d");
-	auto v_e = registrar.RegisterNode("e");
+	auto v_a = registry.RegisterNode("a");
+	auto v_b = registry.RegisterNode("b");
+	auto v_c = registry.RegisterNode("c");
+	auto v_d = registry.RegisterNode("d");
+	auto v_e = registry.RegisterNode("e");
 
-	auto e_ab = registrar.RegisterEdge(v_a, v_b);
-	auto e_bc = registrar.RegisterEdge(v_b, v_c);
-	auto e_bd = registrar.RegisterEdge(v_b, v_d);
+	auto e_ab = registry.RegisterEdge(v_a, v_b);
+	auto e_bc = registry.RegisterEdge(v_b, v_c);
+	auto e_bd = registry.RegisterEdge(v_b, v_d);
 
-	registrar
+	registry
 		.RegisterNodeAttr(v_a, "shape", "polygon")
 		.RegisterNodeAttr(v_a, "sides", "5")
 		.RegisterNodeAttr(v_a, "peripheries", "3")

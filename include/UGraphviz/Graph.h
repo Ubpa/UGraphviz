@@ -2,7 +2,7 @@
 
 #include "Subgraph.h"
 
-namespace Ubpa::Graphviz {
+namespace Ubpa::UGraphviz {
 	class Graph : public Subgraph {
 	public:
 		Graph(std::string id, bool isDigraph = false);

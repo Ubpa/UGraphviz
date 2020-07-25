@@ -1,18 +1,18 @@
 #include <UGraphviz/Graph.h>
 
-#include <UGraphviz/Registrar.h>
+#include <UGraphviz/Registry.h>
 
 #include <sstream>
 
 #include <cassert>
 
-using namespace Ubpa::Graphviz;
+using namespace Ubpa::UGraphviz;
 
 Graph::Graph(std::string id, bool isDigraph)
-	: Subgraph{ new Registrar, std::move(id) }, isDigraph{ isDigraph } {}
+	: Subgraph{ new Registry, std::move(id) }, isDigraph{ isDigraph } {}
 
 Graph::~Graph() {
-	delete registrar;
+	delete registry;
 }
 
 std::string Graph::Dump() const {
@@ -31,12 +31,12 @@ std::string Graph::Dump() const {
 Graph::Graph(Graph&& g) noexcept
 	: Subgraph{ std::move(g) }, isDigraph{ g.isDigraph }
 {
-	g.registrar = nullptr;
+	g.registry = nullptr;
 }
 
 Graph& Graph::operator=(Graph&& g) noexcept {
 	Subgraph::operator=(std::move(g));
 	isDigraph = g.isDigraph;
-	g.registrar = nullptr;
+	g.registry = nullptr;
 	return *this;
 }

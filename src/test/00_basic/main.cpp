@@ -7,19 +7,19 @@ using namespace Ubpa;
 using namespace std;
 
 int main() {
-	Graphviz::Graph graph("hello world", true);
+	UGraphviz::Graph graph("hello world", true);
 
-	auto& registrar = graph.GetRegistrar();
+	auto& registry = graph.GetRegistry();
 
-	auto v_a = registrar.RegisterNode("a");
-	auto v_b = registrar.RegisterNode("b");
-	auto v_c = registrar.RegisterNode("c");
-	auto v_d = registrar.RegisterNode("d");
+	auto v_a = registry.RegisterNode("a");
+	auto v_b = registry.RegisterNode("b");
+	auto v_c = registry.RegisterNode("c");
+	auto v_d = registry.RegisterNode("d");
 
-	auto e_ab = registrar.RegisterEdge(v_a, v_b);
-	auto e_ac = registrar.RegisterEdge(v_a, v_c);
-	auto e_bd = registrar.RegisterEdge(v_b, v_d);
-	auto e_cd = registrar.RegisterEdge(v_c, v_d);
+	auto e_ab = registry.RegisterEdge(v_a, v_b);
+	auto e_ac = registry.RegisterEdge(v_a, v_c);
+	auto e_bd = registry.RegisterEdge(v_b, v_d);
+	auto e_cd = registry.RegisterEdge(v_c, v_d);
 
 	graph
 		.AddEdge(e_ab)

@@ -5,13 +5,13 @@
 
 #include <string>
 
-namespace Ubpa::Graphviz {
-	class Registrar;
+namespace Ubpa::UGraphviz {
+	class Registry;
 
 	class Subgraph {
 	public:
-		Subgraph(Registrar* registrar, std::string id)
-			: registrar{ registrar }, id{ std::move(id) } {}
+		Subgraph(Registry* registry, std::string id)
+			: registry{ registry }, id{ std::move(id) } {}
 
 		~Subgraph();
 
@@ -19,7 +19,7 @@ namespace Ubpa::Graphviz {
 
 		Subgraph& GetSubgraph(const std::string& subgraphID);
 
-		Registrar& GetRegistrar() { return *registrar; }
+		Registry& GetRegistry() { return *registry; }
 
 		// return new subgraph
 		Subgraph& GenSubgraph(std::string ID);
@@ -46,7 +46,7 @@ namespace Ubpa::Graphviz {
 
 		std::string Dump(bool isSub, bool isDigraph, size_t indent) const;
 
-		Registrar* registrar;
+		Registry* registry;
 
 	private:
 		std::string id;
