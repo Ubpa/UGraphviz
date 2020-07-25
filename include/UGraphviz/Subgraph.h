@@ -1,6 +1,6 @@
 #pragma once
 
-#include <unordered_map>
+#include <map>
 #include <unordered_set>
 
 #include <string>
@@ -15,9 +15,9 @@ namespace Ubpa::UGraphviz {
 
 		~Subgraph();
 
-		const std::string& GetID() const noexcept { return id; }
+		std::string_view GetID() const noexcept { return id; }
 
-		Subgraph& GetSubgraph(const std::string& subgraphID);
+		Subgraph& GetSubgraph(std::string_view subgraphID);
 
 		Registry& GetRegistry() { return *registry; }
 
@@ -29,16 +29,16 @@ namespace Ubpa::UGraphviz {
 		Subgraph& RegisterGraphNodeAttr(std::string key, std::string value);
 		Subgraph& RegisterGraphEdgeAttr(std::string key, std::string value);
 
-		Subgraph& DeregisterGraphAttr(const std::string& key);
-		Subgraph& DeregisterGraphNodeAttr(const std::string& key);
-		Subgraph& DeregisterGraphEdgeAttr(const std::string& key);
+		Subgraph& DeregisterGraphAttr(std::string_view key);
+		Subgraph& DeregisterGraphNodeAttr(std::string_view key);
+		Subgraph& DeregisterGraphEdgeAttr(std::string_view key);
 
-		bool HaveNode(size_t nodeIdx) const;
-		bool HaveEdge(size_t edgeIdx) const;
-		Subgraph& AddNode(size_t nodeIdx);
-		Subgraph& AddEdge(size_t edgeIdx);
-		Subgraph& EraseNode(size_t nodeIdx);
-		Subgraph& EraseEdge(size_t edgeIdx);
+		bool HaveNode(size_t nodeIndex) const;
+		bool HaveEdge(size_t edgeIndex) const;
+		Subgraph& AddNode(size_t nodeIndex);
+		Subgraph& AddEdge(size_t edgeIndex);
+		Subgraph& EraseNode(size_t nodeIndex);
+		Subgraph& EraseEdge(size_t edgeIndex);
 
 	protected:
 		Subgraph(Subgraph&&) = default;
@@ -51,12 +51,12 @@ namespace Ubpa::UGraphviz {
 	private:
 		std::string id;
 
-		std::unordered_map<std::string, std::string> graphAttrs;
-		std::unordered_map<std::string, std::string> graphNodeAttrs;
-		std::unordered_map<std::string, std::string> graphEdgeAttrs;
+		std::map<std::string, std::string, std::less<>> graphAttrs;
+		std::map<std::string, std::string, std::less<>> graphNodeAttrs;
+		std::map<std::string, std::string, std::less<>> graphEdgeAttrs;
 
 		std::vector<Subgraph*> subgraphs;
-		std::unordered_map<std::string, size_t> subgraphID2idx;
+		std::map<std::string, size_t, std::less<>> subgraphID2idx;
 
 		std::unordered_set<size_t> nodeIndices;
 		std::unordered_set<size_t> edgeIndices;

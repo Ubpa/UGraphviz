@@ -4,8 +4,7 @@
 
 using namespace Ubpa::UGraphviz;
 
-
-bool Registry::IsRegisteredNode(const std::string& ID) const {
+bool Registry::IsRegisteredNode(std::string_view ID) const {
 	return id2idx.find(ID) != id2idx.end();
 }
 
@@ -21,21 +20,21 @@ bool Registry::IsRegisteredEdge(size_t lhs, size_t rhs) const {
 	return true;
 }
 
-bool Registry::IsRegisteredEdge(const std::string& lhsID, const std::string& rhsID) const {
-	size_t lhs = GetNodeIdx(lhsID);
-	size_t rhs = GetNodeIdx(rhsID);
+bool Registry::IsRegisteredEdge(std::string_view lhsID, std::string_view rhsID) const {
+	size_t lhs = GetNodeIndex(lhsID);
+	size_t rhs = GetNodeIndex(rhsID);
 
 	return IsRegisteredEdge(lhs, rhs);
 }
 
-size_t Registry::GetNodeIdx(const std::string& ID) const {
+size_t Registry::GetNodeIndex(std::string_view ID) const {
 	assert(IsRegisteredNode(ID));
 	return id2idx.find(ID)->second;
 }
 
-size_t Registry::GetEdgeIdx(const std::string& lhsID, const std::string& rhsID) const {
-	size_t lhs = GetNodeIdx(lhsID);
-	size_t rhs = GetNodeIdx(rhsID);
+size_t Registry::GetEdgeIndex(std::string_view lhsID, std::string_view rhsID) const {
+	size_t lhs = GetNodeIndex(lhsID);
+	size_t rhs = GetNodeIndex(rhsID);
 	
 	assert(IsRegisteredEdge(lhs, rhs));
 
@@ -56,22 +55,22 @@ size_t Registry::RegisterEdge(size_t lhs, size_t rhs) {
 	return idx;
 }
 
-Registry& Registry::RegisterNodeAttr(size_t nodeIdx, std::string key, std::string value) {
-	nodeAttrs[nodeIdx].emplace(std::move(key), std::move(value));
+Registry& Registry::RegisterNodeAttr(size_t nodeIndex, std::string key, std::string value) {
+	nodeAttrs[nodeIndex].emplace(std::move(key), std::move(value));
 	return *this;
 }
 
-Registry& Registry::RegisterEdgeAttr(size_t edgeIdx, std::string key, std::string value) {
-	edgeAttrs[edgeIdx].emplace(std::move(key), std::move(value));
+Registry& Registry::RegisterEdgeAttr(size_t edgeIndex, std::string key, std::string value) {
+	edgeAttrs[edgeIndex].emplace(std::move(key), std::move(value));
 	return *this;
 }
 
-Registry& Registry::DeregisterNodeAttr(size_t nodeIdx, const std::string& key) {
-	nodeAttrs[nodeIdx].erase(key);
+Registry& Registry::DeregisterNodeAttr(size_t nodeIndex, std::string_view key) {
+	nodeAttrs[nodeIndex].erase(nodeAttrs[nodeIndex].find(key));
 	return *this;
 }
 
-Registry& Registry::DeregisterEdgeAttr(size_t edgeIdx, const std::string& key) {
-	edgeAttrs[edgeIdx].erase(key);
+Registry& Registry::DeregisterEdgeAttr(size_t edgeIndex, std::string_view key) {
+	edgeAttrs[edgeIndex].erase(edgeAttrs[edgeIndex].find(key));
 	return *this;
 }
