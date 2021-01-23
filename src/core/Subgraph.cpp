@@ -52,35 +52,35 @@ Subgraph& Subgraph::GenSubgraph(std::string ID) {
 	return *subgraphs.back();
 }
 
-bool Subgraph::HaveNode(size_t nodeIndex) const {
+bool Subgraph::HaveNode(std::size_t nodeIndex) const {
 	return nodeIndices.find(nodeIndex) != nodeIndices.end();
 }
 
-bool Subgraph::HaveEdge(size_t edgeIndex) const {
+bool Subgraph::HaveEdge(std::size_t edgeIndex) const {
 	return edgeIndices.find(edgeIndex) != edgeIndices.end();
 }
 
-Subgraph& Subgraph::AddNode(size_t nodeIndex) {
+Subgraph& Subgraph::AddNode(std::size_t nodeIndex) {
 	nodeIndices.insert(nodeIndex);
 	return *this;
 }
 
-Subgraph& Subgraph::AddEdge(size_t edgeIndex) {
+Subgraph& Subgraph::AddEdge(std::size_t edgeIndex) {
 	edgeIndices.insert(edgeIndex);
 	return *this;
 }
 
-Subgraph& Subgraph::EraseNode(size_t nodeIndex) {
+Subgraph& Subgraph::EraseNode(std::size_t nodeIndex) {
 	nodeIndices.erase(nodeIndex);
 	return *this;
 }
 
-Subgraph& Subgraph::EraseEdge(size_t edgeIndex) {
+Subgraph& Subgraph::EraseEdge(std::size_t edgeIndex) {
 	edgeIndices.erase(edgeIndex);
 	return *this;
 }
 
-std::string Subgraph::Dump(bool isSub, bool isDigraph, size_t indent) const {
+std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const {
 	if (!isSub && subgraphs.empty() && nodeIndices.empty() && edgeIndices.empty())
 		return "";
 
@@ -93,7 +93,7 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, size_t indent) const {
 	};
 
 	auto print_indent = [&]() -> std::stringstream& {
-		for (size_t i = 0; i < indent; i++)
+		for (std::size_t i = 0; i < indent; i++)
 			ss << "  ";
 		return ss;
 	};
@@ -137,7 +137,7 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, size_t indent) const {
 	const auto& nodeAttrs = registry->GetNodeAttrs();
 	const auto& edgeAttrs = registry->GetEdgeAttrs();
 
-	for (size_t nodeIndex : nodeIndices) {
+	for (std::size_t nodeIndex : nodeIndices) {
 		const auto& nodeID = nodeIDs[nodeIndex];
 		auto target = nodeAttrs.find(nodeIndex);
 		if (target == nodeAttrs.end())
@@ -146,7 +146,7 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, size_t indent) const {
 			dumpAttrs(qoute(nodeID), target->second);
 	}
 
-	for (size_t edgeIndex : edgeIndices) {
+	for (std::size_t edgeIndex : edgeIndices) {
 		const auto& [lhs, rhs] = edgeIDs[edgeIndex];
 		std::string head = qoute(nodeIDs[lhs]) + " " + eop + " " + qoute(nodeIDs[rhs]);
 		auto target = edgeAttrs.find(edgeIndex);

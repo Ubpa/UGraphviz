@@ -33,18 +33,18 @@ namespace Ubpa::UGraphviz {
 		Subgraph& DeregisterGraphNodeAttr(std::string_view key);
 		Subgraph& DeregisterGraphEdgeAttr(std::string_view key);
 
-		bool HaveNode(size_t nodeIndex) const;
-		bool HaveEdge(size_t edgeIndex) const;
-		Subgraph& AddNode(size_t nodeIndex);
-		Subgraph& AddEdge(size_t edgeIndex);
-		Subgraph& EraseNode(size_t nodeIndex);
-		Subgraph& EraseEdge(size_t edgeIndex);
+		bool HaveNode(std::size_t nodeIndex) const;
+		bool HaveEdge(std::size_t edgeIndex) const;
+		Subgraph& AddNode(std::size_t nodeIndex);
+		Subgraph& AddEdge(std::size_t edgeIndex);
+		Subgraph& EraseNode(std::size_t nodeIndex);
+		Subgraph& EraseEdge(std::size_t edgeIndex);
 
 	protected:
 		Subgraph(Subgraph&&) = default;
 		Subgraph& operator=(Subgraph&&) noexcept = default;
 
-		std::string Dump(bool isSub, bool isDigraph, size_t indent) const;
+		std::string Dump(bool isSub, bool isDigraph, std::size_t indent) const;
 
 		Registry* registry;
 
@@ -56,9 +56,9 @@ namespace Ubpa::UGraphviz {
 		std::map<std::string, std::string, std::less<>> graphEdgeAttrs;
 
 		std::vector<Subgraph*> subgraphs;
-		std::map<std::string, size_t, std::less<>> subgraphID2idx;
+		std::map<std::string, std::size_t, std::less<>> subgraphID2idx;
 
-		std::unordered_set<size_t> nodeIndices;
-		std::unordered_set<size_t> edgeIndices;
+		std::unordered_set<std::size_t> nodeIndices;
+		std::unordered_set<std::size_t> edgeIndices;
 	};
 }
