@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Subgraph.h"
+#include "Subgraph.hpp"
 
 namespace Ubpa::UGraphviz {
 	class Graph : public Subgraph {

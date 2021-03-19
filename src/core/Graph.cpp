@@ -1,6 +1,6 @@
-#include <UGraphviz/Graph.h>
+#include <UGraphviz/Graph.hpp>
 
-#include <UGraphviz/Registry.h>
+#include <UGraphviz/Registry.hpp>
 
 #include <sstream>
 

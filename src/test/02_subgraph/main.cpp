@@ -1,4 +1,4 @@
-#include <UGraphviz/UGraphviz.h>
+#include <UGraphviz/UGraphviz.hpp>
 
 #include <iostream>
 

@@ -1,4 +1,4 @@
-#include <UGraphviz/Registry.h>
+#include <UGraphviz/Registry.hpp>
 
 #include <cassert>
 
