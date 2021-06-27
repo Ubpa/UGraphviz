@@ -115,7 +115,7 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const
 				str += ":" + qoute(port.first.ID);
 			if (port.first.compass != Registry::Port::Compass::None) {
 				constexpr const char* compass2name[] = {
-					"n","ne","e","se","s","sw","s","sw","w","nw","c"
+					"n","ne","e","se","s","sw","w","nw","c"
 				};
 				str += ":";
 				str += qoute(compass2name[static_cast<int>(port.first.compass)]);
@@ -130,10 +130,10 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const
 				str += ":" + qoute(port.second.ID);
 			if (port.second.compass != Registry::Port::Compass::None) {
 				constexpr const char* compass2name[] = {
-					"n","ne","e","se","s","sw","s","sw","w","nw","c"
+					"n","ne","e","se","s","sw","w","nw","c"
 				};
 				str += ":";
-				str += qoute(compass2name[static_cast<int>(port.second.compass)]);
+				str += compass2name[static_cast<int>(port.second.compass)];
 			}
 		}
 
