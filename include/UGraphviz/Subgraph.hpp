@@ -29,9 +29,9 @@ namespace Ubpa::UGraphviz {
 		Subgraph& RegisterGraphNodeAttr(std::string key, std::string value);
 		Subgraph& RegisterGraphEdgeAttr(std::string key, std::string value);
 
-		Subgraph& DeregisterGraphAttr(std::string_view key);
-		Subgraph& DeregisterGraphNodeAttr(std::string_view key);
-		Subgraph& DeregisterGraphEdgeAttr(std::string_view key);
+		Subgraph& UnregisterGraphAttr(std::string_view key);
+		Subgraph& UnregisterGraphNodeAttr(std::string_view key);
+		Subgraph& UnregisterGraphEdgeAttr(std::string_view key);
 
 		bool HaveNode(std::size_t nodeIndex) const;
 		bool HaveEdge(std::size_t edgeIndex) const;

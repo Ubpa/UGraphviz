@@ -30,17 +30,17 @@ Subgraph& Subgraph::RegisterGraphEdgeAttr(std::string key, std::string value) {
 	return *this;
 }
 
-Subgraph& Subgraph::DeregisterGraphAttr(std::string_view key) {
+Subgraph& Subgraph::UnregisterGraphAttr(std::string_view key) {
 	graphAttrs.erase(graphAttrs.find(key));
 	return *this;
 }
 
-Subgraph& Subgraph::DeregisterGraphNodeAttr(std::string_view key) {
+Subgraph& Subgraph::UnregisterGraphNodeAttr(std::string_view key) {
 	graphNodeAttrs.erase(graphNodeAttrs.find(key));
 	return *this;
 }
 
-Subgraph& Subgraph::DeregisterGraphEdgeAttr(std::string_view key) {
+Subgraph& Subgraph::UnregisterGraphEdgeAttr(std::string_view key) {
 	graphEdgeAttrs.erase(graphEdgeAttrs.find(key));
 	return *this;
 }
@@ -84,6 +84,12 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const
 	if (!isSub && subgraphs.empty() && nodeIndices.empty() && edgeIndices.empty())
 		return "";
 
+	const auto& nodeIDs = registry->GetNodes();
+	const auto& edgeIDs = registry->GetEdges();
+	const auto& nodeAttrs = registry->GetNodeAttrs();
+	const auto& edgeAttrs = registry->GetEdgeAttrs();
+	const auto& edgePorts = registry->GetEdgePorts();
+
 	std::stringstream ss;
 
 	std::string eop = isDigraph ? "->" : "--";
@@ -96,6 +102,42 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const
 		for (std::size_t i = 0; i < indent; i++)
 			ss << "  ";
 		return ss;
+	};
+
+	auto dump_edge = [&](size_t idx) {
+		const auto& [lhs, rhs] = edgeIDs[idx];
+		std::string str;
+
+		str += qoute(nodeIDs[lhs]);
+		if (edgePorts.contains(idx)) {
+			const auto& port = edgePorts.at(idx);
+			if (!port.first.ID.empty())
+				str += ":" + qoute(port.first.ID);
+			if (port.first.compass != Registry::Port::Compass::None) {
+				constexpr const char* compass2name[] = {
+					"n","ne","e","se","s","sw","s","sw","w","nw","c"
+				};
+				str += ":";
+				str += qoute(compass2name[static_cast<int>(port.first.compass)]);
+			}
+		}
+		str += " " + eop + " ";
+
+		str += qoute(nodeIDs[rhs]);
+		if (edgePorts.contains(idx)) {
+			const auto& port = edgePorts.at(idx);
+			if (!port.second.ID.empty())
+				str += ":" + qoute(port.second.ID);
+			if (port.second.compass != Registry::Port::Compass::None) {
+				constexpr const char* compass2name[] = {
+					"n","ne","e","se","s","sw","s","sw","w","nw","c"
+				};
+				str += ":";
+				str += qoute(compass2name[static_cast<int>(port.second.compass)]);
+			}
+		}
+
+		return str;
 	};
 
 	print_indent();
@@ -132,11 +174,6 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const
 	for (const auto& subgraph : subgraphs)
 		ss << subgraph->Dump(true, isDigraph, indent);
 
-	const auto& nodeIDs = registry->GetNodes();
-	const auto& edgeIDs = registry->GetEdges();
-	const auto& nodeAttrs = registry->GetNodeAttrs();
-	const auto& edgeAttrs = registry->GetEdgeAttrs();
-
 	for (std::size_t nodeIndex : nodeIndices) {
 		const auto& nodeID = nodeIDs[nodeIndex];
 		auto target = nodeAttrs.find(nodeIndex);
@@ -147,8 +184,7 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const
 	}
 
 	for (std::size_t edgeIndex : edgeIndices) {
-		const auto& [lhs, rhs] = edgeIDs[edgeIndex];
-		std::string head = qoute(nodeIDs[lhs]) + " " + eop + " " + qoute(nodeIDs[rhs]);
+		std::string head = dump_edge(edgeIndex);
 		auto target = edgeAttrs.find(edgeIndex);
 		if (target == edgeAttrs.end())
 			print_indent() << head << std::endl;
