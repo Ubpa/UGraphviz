@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-using namespace Ubpa;
+using namespace Ubpa::UGraphviz;
 
 using namespace std;
 
 int main() {
-	UGraphviz::Graph graph("attr", true);
+	Graph graph("attr", true);
 
 	auto& registry = graph.GetRegistry();
 
@@ -22,22 +22,22 @@ int main() {
 	auto e_bd = registry.RegisterEdge(v_b, v_d);
 
 	registry
-		.RegisterNodeAttr(v_a, "shape", "polygon")
-		.RegisterNodeAttr(v_a, "sides", "5")
-		.RegisterNodeAttr(v_a, "peripheries", "3")
-		.RegisterNodeAttr(v_a, "color", "lightblue")
-		.RegisterNodeAttr(v_a, "style", "filled")
+		.RegisterNodeAttr(v_a, Attrs_shape, "polygon")
+		.RegisterNodeAttr(v_a, Attrs_sides, "5")
+		.RegisterNodeAttr(v_a, Attrs_peripheries, "3")
+		.RegisterNodeAttr(v_a, Attrs_color, "lightblue")
+		.RegisterNodeAttr(v_a, Attrs_style, "filled")
 
-		.RegisterNodeAttr(v_c, "shape", "polygon")
-		.RegisterNodeAttr(v_c, "sides", "4")
-		.RegisterNodeAttr(v_c, "skew", ".4")
-		.RegisterNodeAttr(v_c, "label", "hello world")
+		.RegisterNodeAttr(v_c, Attrs_shape, "polygon")
+		.RegisterNodeAttr(v_c, Attrs_sides, "4")
+		.RegisterNodeAttr(v_c, Attrs_skew, ".4")
+		.RegisterNodeAttr(v_c, Attrs_label, "hello world")
 
-		.RegisterNodeAttr(v_d, "shape", "invtriangle")
+		.RegisterNodeAttr(v_d, Attrs_shape, "invtriangle")
 
-		.RegisterNodeAttr(v_e, "shape", "polygon")
-		.RegisterNodeAttr(v_e, "sides", "4")
-		.RegisterNodeAttr(v_e, "distortion", ".7");
+		.RegisterNodeAttr(v_e, Attrs_shape, "polygon")
+		.RegisterNodeAttr(v_e, Attrs_sides, "4")
+		.RegisterNodeAttr(v_e, Attrs_distortion, ".7");
 
 	graph
 		.AddNode(v_a)

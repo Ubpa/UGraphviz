@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-using namespace Ubpa;
+using namespace Ubpa::UGraphviz;
 
 using namespace std;
 
 int main() {
-	UGraphviz::Graph graph("G", true);
+	Graph graph("G", true);
 
 	auto& registry = graph.GetRegistry();
 
@@ -44,11 +44,11 @@ int main() {
 
 	auto& c0 = graph.GenSubgraph("cluster0");
 	c0
-		.RegisterGraphNodeAttr("style", "filled")
-		.RegisterGraphNodeAttr("color", "white")
-		.RegisterGraphAttr("style", "filled")
-		.RegisterGraphAttr("color", "lightgrey")
-		.RegisterGraphAttr("label", "process #1")
+		.RegisterGraphNodeAttr(Attrs_style, "filled")
+		.RegisterGraphNodeAttr(Attrs_color, "white")
+		.RegisterGraphAttr(Attrs_style, "filled")
+		.RegisterGraphAttr(Attrs_color, "lightgrey")
+		.RegisterGraphAttr(Attrs_label, "process #1")
 		
 		.AddEdge(e_a0_a1)
 		.AddEdge(e_a1_a2)
@@ -56,17 +56,17 @@ int main() {
 
 	auto& c1 = graph.GenSubgraph("cluster1");
 	c1
-		.RegisterGraphNodeAttr("style", "filled")
-		.RegisterGraphAttr("color", "blue")
-		.RegisterGraphAttr("label", "process #2")
+		.RegisterGraphNodeAttr(Attrs_style, "filled")
+		.RegisterGraphAttr(Attrs_color, "blue")
+		.RegisterGraphAttr(Attrs_label, "process #2")
 		
 		.AddEdge(e_b0_b1)
 		.AddEdge(e_b1_b2)
 		.AddEdge(e_b2_b3);
 
 	registry
-		.RegisterNodeAttr(v_start, "shape", "Mdiamond")
-		.RegisterNodeAttr(v_end, "shape", "Msquare");
+		.RegisterNodeAttr(v_start, Attrs_shape, "Mdiamond")
+		.RegisterNodeAttr(v_end, Attrs_shape, "Msquare");
 
 	graph
 		.AddNode(v_start)
