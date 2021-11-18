@@ -7,7 +7,7 @@ using namespace Ubpa;
 using namespace std;
 
 int main() {
-	UGraphviz::Graph graph("hello world", true);
+	UGraphviz::Graph graph("hello_world", true);
 
 	auto& registry = graph.GetRegistry();
 

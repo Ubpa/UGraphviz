@@ -8,26 +8,28 @@
 ## Example
 
 ```c++
-#include <UGraphviz/UGraphviz.h>
+#include <UGraphviz/UGraphviz.hpp>
+
 #include <iostream>
 
 using namespace Ubpa;
+
 using namespace std;
 
 int main() {
   UGraphviz::Graph graph("hello world", true);
 
-  auto& registrar = graph.GetRegistry();
+  auto& registry = graph.GetRegistry();
 
-  auto v_a = registrar.RegisterNode("a");
-  auto v_b = registrar.RegisterNode("b");
-  auto v_c = registrar.RegisterNode("c");
-  auto v_d = registrar.RegisterNode("d");
+  auto v_a = registry.RegisterNode("a");
+  auto v_b = registry.RegisterNode("b");
+  auto v_c = registry.RegisterNode("c");
+  auto v_d = registry.RegisterNode("d");
 
-  auto e_ab = registrar.RegisterEdge(v_a, v_b);
-  auto e_ac = registrar.RegisterEdge(v_a, v_c);
-  auto e_bd = registrar.RegisterEdge(v_b, v_d);
-  auto e_cd = registrar.RegisterEdge(v_c, v_d);
+  auto e_ab = registry.RegisterEdge(v_a, v_b);
+  auto e_ac = registry.RegisterEdge(v_a, v_c);
+  auto e_bd = registry.RegisterEdge(v_b, v_d);
+  auto e_cd = registry.RegisterEdge(v_c, v_d);
 
   graph
     .AddEdge(e_ab)
@@ -36,8 +38,35 @@ int main() {
     .AddEdge(e_cd);
 
   cout << graph.Dump() << endl;
+
+  return 0;
 }
 ```
+
+Result is
+
+```
+strict digraph "hello_world" {
+  "a" -> "b"
+  "a" -> "c"
+  "b" -> "d"
+  "c" -> "d"
+}
+```
+
+![Alt text](https://g.gravizo.com/source/gravizo_mask_result?https%3A%2F%2Fraw.githubusercontent.com%2FUbpa%2FUGraphviz%2Fmaster%2FREADME.md)
+
+<details>  
+<summary>result graphviz source code</summary>
+gravizo_mask_result
+digraph hello_world {
+  "a" -> "b"
+  "a" -> "c"
+  "b" -> "d"
+  "c" -> "d"
+}
+gravizo_mask_result
+</details>
 
 **other example**
 
