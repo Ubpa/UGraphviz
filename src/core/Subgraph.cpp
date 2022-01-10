@@ -81,6 +81,10 @@ Subgraph& Subgraph::EraseEdge(std::size_t edgeIndex) {
 }
 
 std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const {
+	constexpr const char* compass2name[] = {
+		"n","ne","e","se","s","sw","w","nw","c"
+	};
+
 	if (!isSub && subgraphs.empty() && nodeIndices.empty() && edgeIndices.empty())
 		return "";
 
@@ -104,7 +108,7 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const
 		return ss;
 	};
 
-	auto dump_edge = [&](size_t idx) {
+	auto dump_edge = [&, compass2name](size_t idx) {
 		const auto& [lhs, rhs] = edgeIDs[idx];
 		std::string str;
 
@@ -114,11 +118,8 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const
 			if (!port.first.ID.empty())
 				str += ":" + qoute(port.first.ID);
 			if (port.first.compass != Registry::Port::Compass::None) {
-				constexpr const char* compass2name[] = {
-					"n","ne","e","se","s","sw","w","nw","c"
-				};
 				str += ":";
-				str += qoute(compass2name[static_cast<int>(port.first.compass)]);
+				str += compass2name[static_cast<int>(port.first.compass)];
 			}
 		}
 		str += " " + eop + " ";
@@ -149,7 +150,7 @@ std::string Subgraph::Dump(bool isSub, bool isDigraph, std::size_t indent) const
 
 	indent++;
 
-	auto dumpAttrs = [&](std::string_view head, const auto& attrs) {
+	auto dumpAttrs = [&, compass2name](std::string_view head, const auto& attrs) {
 		if (attrs.empty())
 			return;
 
